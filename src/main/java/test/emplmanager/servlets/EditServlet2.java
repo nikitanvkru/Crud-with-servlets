@@ -13,27 +13,25 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 @WebServlet("/EditServlet2")
 public class EditServlet2 extends HttpServlet {
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html");
         PrintWriter out=response.getWriter();
 
         String sid=request.getParameter("Emp_id");
-        int Emp_id=Integer.parseInt(sid);
+        int id=Integer.parseInt(sid);
         String name=request.getParameter("Emp_name");
         String department_id=request.getParameter("department_id");
         String position_id=request.getParameter("position_id");
 
         Emp e=new Emp();
-        e.setEmp_id(Emp_id);
+        e.setEmp_id(id);
         e.setEmp_name(name);
         e.setDepartment_id(Integer.parseInt(department_id.substring(0,1)));
         e.setPosition_id(Integer.parseInt(position_id.substring(0,1)));
 
-
         int status=Dao.update(e);
         if(status>0){
-            response.sendRedirect("ViewAllServlet");
+            response.sendRedirect("ViewServlet");
         }else{
             out.println("Sorry! unable to update record");
         }

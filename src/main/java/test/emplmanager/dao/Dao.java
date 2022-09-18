@@ -11,7 +11,7 @@ public class Dao {
         Connection con=null;
         try{
             Class.forName("com.mysql.jdbc.Driver");
-            con=DriverManager.getConnection("jdbc:mysql://localhost:3306/employees","root","root");
+            con=DriverManager.getConnection("jdbc:mysql://localhost:3306/testbase","root","root");
         }catch(Exception e){System.out.println(e);}
         return con;
     }
@@ -20,11 +20,10 @@ public class Dao {
         try{
             Connection con= Dao.getConnection();
             PreparedStatement ps=con.prepareStatement(
-                    "insert into employee(Emp_id,Emp_name,department_id,position_id) values (?,?,?,?)");
-            ps.setInt(1,e.getEmp_id());
-            ps.setString(2,e.getEmp_name());
-            ps.setInt(3,e.getDepartment_id());
-            ps.setInt(4,e.getPosition_id());
+                    "insert into employee(Emp_name,department_id,position_id) values (?,?,?)");
+            ps.setString(1,e.getEmp_name());
+            ps.setInt(2,e.getDepartment_id());
+            ps.setInt(3,e.getPosition_id());
 
             status=ps.executeUpdate();
 

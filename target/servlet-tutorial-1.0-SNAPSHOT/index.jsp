@@ -12,7 +12,6 @@
 <h1>Add New Employee</h1>
 <form action="SaveServlet" method="post">
     <table>
-        <tr><td>ID:</td><td><input type="text" name="Emp_id"/></td></tr>
         <tr><td>Name:</td><td><input type="text" name="Emp_name"/></td></tr>
         <tr><td>Department:</td><td>
             <select name="department_id" style="width:150px">

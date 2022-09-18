@@ -15,18 +15,16 @@ import javax.servlet.http.HttpServletResponse;
 public class SaveServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+
         response.setContentType("text/html");
         PrintWriter out=response.getWriter();
 
-
-        String Emp_id=request.getParameter("Emp_id");
         String Emp_name=request.getParameter("Emp_name");
         String department_id=request.getParameter("department_id");
         String position_id=request.getParameter("position_id");
 
 
         Emp e=new Emp();
-        e.setEmp_id(Integer.parseInt(Emp_id));
         e.setEmp_name(Emp_name);
         e.setDepartment_id(Integer.parseInt(department_id.substring(0,1)));
         e.setPosition_id(Integer.parseInt(position_id.substring(0,1)));
@@ -39,7 +37,6 @@ public class SaveServlet extends HttpServlet {
             out.println("Sorry! unable to save record");
 
         }
-        response.sendRedirect("ViewAllServlet");
         out.close();
     }
 
