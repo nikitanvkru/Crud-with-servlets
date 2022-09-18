@@ -18,7 +18,7 @@ public class ViewServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html");
         PrintWriter out=response.getWriter();
-        out.println("<a href='index.html'>Add New Employee</a>");
+        out.println("<a href='/Testfor1_war_exploded/'>Add New Employee</a>");
         out.println("<h1>Employees edit</h1>");
 
         List<Emp> list= Dao.getAllEmployeesForEdit();
