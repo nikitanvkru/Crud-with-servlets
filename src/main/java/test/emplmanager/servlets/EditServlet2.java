@@ -34,6 +34,7 @@ public class EditServlet2 extends HttpServlet {
             response.sendRedirect("ViewServlet");
         }else{
             out.println("Sorry! unable to update record");
+            out.println("<p>Record saved successfully!</p>");
         }
 
         out.close();

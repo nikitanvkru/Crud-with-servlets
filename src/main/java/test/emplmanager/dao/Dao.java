@@ -19,6 +19,13 @@ public class Dao {
         int status=0;
         try{
             Connection con= Dao.getConnection();
+            PreparedStatement check1=con.prepareStatement(
+                    "select count(department_id) as total from employee where position_id=3 and department_id=1");
+            PreparedStatement check2=con.prepareStatement(
+                    "select count(department_id) as total from employee where position_id=3 and department_id=2");
+            ResultSet rs1=check1.executeQuery();
+            ResultSet rs2=check2.executeQuery();
+            if (rs1.getInt("total") == 1 && rs2.getInt("total") == 1){con.close();}
             PreparedStatement ps=con.prepareStatement(
                     "insert into employee(Emp_name,department_id,position_id) values (?,?,?)");
             ps.setString(1,e.getEmp_name());
@@ -36,6 +43,13 @@ public class Dao {
         int status=0;
         try{
             Connection con= Dao.getConnection();
+            PreparedStatement check1=con.prepareStatement(
+                    "select count(department_id) as total from employee where position_id=3 and department_id=1");
+            PreparedStatement check2=con.prepareStatement(
+                    "select count(department_id) as total from employee where position_id=3 and department_id=2");
+            ResultSet rs1=check1.executeQuery();
+            ResultSet rs2=check2.executeQuery();
+            if (rs1.getInt("total") == 1 && rs2.getInt("total") == 1){con.close();}
             PreparedStatement ps=con.prepareStatement(
                     "update employee set  Emp_name=?,department_id=?,position_id=? where Emp_id=?");
             ps.setString(1,e.getEmp_name());
