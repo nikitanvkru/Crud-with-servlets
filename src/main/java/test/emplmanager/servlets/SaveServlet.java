@@ -35,7 +35,6 @@ public class SaveServlet extends HttpServlet {
             out.println("<p>Record saved successfully!</p>");
             request.getRequestDispatcher("index.html").include(request, response);
         }else{
-            out.println("<p>Record saved successfully!</p>");
             out.println("Sorry! unable to save record");
 
         }

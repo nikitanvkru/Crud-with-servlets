@@ -44,7 +44,6 @@ public class EditServlet extends HttpServlet {
         out.print("<tr><td colspan='2'><input type='submit' value='Edit &amp; Save '/></td></tr>");
         out.print("</table>");
         out.print("</form>");
-
         out.close();
     }
 }

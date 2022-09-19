@@ -3,35 +3,36 @@ package test.emplmanager.servlets;
 import test.emplmanager.dao.Dao;
 import test.emplmanager.model.Emp;
 
-import java.io.IOException;
-import java.io.PrintWriter;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-@WebServlet("/EditServlet2")
-public class EditServlet2 extends HttpServlet {
+import java.io.IOException;
+import java.io.PrintWriter;
+
+@WebServlet("/EditDepartmentServlet2")
+public class EditDepartmentServlet2 extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html");
         PrintWriter out=response.getWriter();
 
-        String sid=request.getParameter("Emp_id");
+        String sid=request.getParameter("Dep_id");
         int id=Integer.parseInt(sid);
-        String name=request.getParameter("Emp_name");
-        String department_id=request.getParameter("department_id");
-        String position_id=request.getParameter("position_id");
+        String Dep_name=request.getParameter("Dep_name");
+        String email=request.getParameter("email");
+        String phone=request.getParameter("phone");
+
 
         Emp e=new Emp();
-        e.setEmp_id(id);
-        e.setEmp_name(name);
-        e.setDepartment_id(Integer.parseInt(department_id.substring(0,1)));
-        e.setPosition_id(Integer.parseInt(position_id.substring(0,1)));
+        e.setDep_id(id);
+        e.setDep_name(Dep_name);
+        e.setEmail(email);
+        e.setPhone(phone);
 
-        int status=Dao.update(e);
+        int status= Dao.updateDepartment(e);
         if(status>0){
-            response.sendRedirect("ViewServlet");
+            response.sendRedirect("ViewDepartmentServlet");
         }else{
             out.println("Sorry! unable to update record");
         }

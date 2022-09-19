@@ -39,6 +39,46 @@
     <servlet-class>test.emplmanager.servlets.DeleteServlet</servlet-class>
   </servlet>
 
+  <servlet-mapping>
+    <servlet-name>ViewPositionServlet</servlet-name>
+    <url-pattern>/viewPosition</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>ViewPositionServlet</servlet-name>
+    <servlet-class>test.emplmanager.servlets.ViewPositionServlet</servlet-class>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>ViewDepartmentServlet</servlet-name>
+    <url-pattern>/viewDepartment</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>ViewDepartmentServlet</servlet-name>
+    <servlet-class>test.emplmanager.servlets.ViewDepartmentServlet</servlet-class>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>EditDepartmentServlet</servlet-name>
+    <url-pattern>/editDepartment</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>EditDepartmentServlet</servlet-name>
+    <servlet-class>test.emplmanager.servlets.EditDepartmentServlet</servlet-class>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>EditPositionServlet</servlet-name>
+    <url-pattern>/editPosition</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>EditPositionServlet</servlet-name>
+    <servlet-class>test.emplmanager.servlets.EditPositionServlet</servlet-class>
+  </servlet>
+
 
   <!--Update user-->
   <servlet-mapping>

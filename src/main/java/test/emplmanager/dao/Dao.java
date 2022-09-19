@@ -64,6 +64,119 @@ public class Dao {
 
         return status;
     }
+    public static int updateDepartment(Emp e){
+        int status=0;
+        try{
+            Connection con= Dao.getConnection();
+            PreparedStatement ps=con.prepareStatement(
+                    "update department set  Dep_name=?,email=?,phone=? where Dep_id=?");
+            ps.setString(1,e.getDep_name());
+            ps.setString(2,e.getEmail());
+            ps.setString(3,e.getPhone());
+            ps.setInt(4,e.getDep_id());
+
+            status=ps.executeUpdate();
+
+            con.close();
+        }catch(Exception ex){ex.printStackTrace();}
+
+        return status;
+    }
+    public static int updatePosition(Emp e){
+        int status=0;
+        try{
+            Connection con= Dao.getConnection();
+            PreparedStatement ps=con.prepareStatement(
+                    "update position set  Pos_name=?,wage=? where Pos_id=?");
+            ps.setString(1,e.getPos_name());
+            ps.setInt(2,e.getWage());
+            ps.setInt(3,e.getPos_id());
+
+            status=ps.executeUpdate();
+
+            con.close();
+        }catch(Exception ex){ex.printStackTrace();}
+
+        return status;
+    }
+    public static Emp getPositionById(int Pos_id){
+        Emp e=new Emp();
+
+        try{
+            Connection con= Dao.getConnection();
+            PreparedStatement ps=con.prepareStatement("SELECT * from position where Pos_id=?");
+            ps.setInt(1,Pos_id);
+            ResultSet rs=ps.executeQuery();
+            if(rs.next()){
+                e.setPos_id(rs.getInt(1));
+                e.setPos_name(rs.getString(2));
+                e.setWage(rs.getInt(3));
+            }
+            con.close();
+        }catch(Exception ex){ex.printStackTrace();}
+
+        return e;
+    }
+    public static Emp getDepartmentById(int Dep_id){
+        Emp e=new Emp();
+
+        try{
+            Connection con= Dao.getConnection();
+            PreparedStatement ps=con.prepareStatement("SELECT * from department where Dep_id=?");
+            ps.setInt(1,Dep_id);
+            ResultSet rs=ps.executeQuery();
+            if(rs.next()){
+                e.setDep_id(rs.getInt(1));
+                e.setDep_name(rs.getString(2));
+                e.setEmail(rs.getString(3));
+                e.setPhone(rs.getString(4));
+            }
+            con.close();
+        }catch(Exception ex){ex.printStackTrace();}
+
+        return e;
+    }
+    public static List<Emp> getAllPositionsForEdit(){
+
+        List<Emp> list=new ArrayList<Emp>();
+
+        try{
+            Connection con= Dao.getConnection();
+            PreparedStatement ps=con.prepareStatement("select * from position");
+            ResultSet rs=ps.executeQuery();
+            while(rs.next()){
+                Emp e=new Emp();
+                e.setPos_id(rs.getInt(1));
+                e.setPos_name(rs.getString(2));
+                e.setWage(rs.getInt(3));
+                list.add(e);
+            }
+            con.close();
+        }catch(Exception e){e.printStackTrace();}
+
+        return list;
+    }
+    public static List<Emp> getAllDepartmentForEdit(){
+
+        List<Emp> list=new ArrayList<>();
+
+        try{
+            Connection con= Dao.getConnection();
+            PreparedStatement ps=con.prepareStatement("select * from department");
+            ResultSet rs=ps.executeQuery();
+            while(rs.next()){
+                Emp e=new Emp();
+                e.setDep_id(rs.getInt(1));
+                e.setDep_name(rs.getString(2));
+                e.setEmail(rs.getString(3));
+                e.setPhone(rs.getString(4));
+                list.add(e);
+            }
+            con.close();
+        }catch(Exception e){e.printStackTrace();}
+
+        return list;
+    }
     public static int delete(int Emp_id){
         int status=0;
         try{

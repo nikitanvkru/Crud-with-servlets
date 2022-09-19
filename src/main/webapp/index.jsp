@@ -38,6 +38,12 @@
 <br/>
 <a href="ViewAllServlet">view employees</a>
 <br>
+<br/>
+<a href="ViewPositionServlet">edit position table</a>
+<br>
+<br/>
+<a href="ViewDepartmentServlet">edit department table</a>
+<br>
 
 </body>
 </html>
