@@ -31,12 +31,14 @@ public class SaveServlet extends HttpServlet {
 
         int status=Dao.save(e);
         if(status>0){
-            out.print("<p>Record saved successfully!</p>");
+            out.println("<a href='/Testfor1_war_exploded/'>Add New Employee</a>");
+            out.println("<p>Record saved successfully!</p>");
             request.getRequestDispatcher("index.html").include(request, response);
         }else{
             out.println("Sorry! unable to save record");
 
         }
+
         out.close();
     }
 
