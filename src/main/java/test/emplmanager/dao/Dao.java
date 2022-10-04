@@ -1,40 +1,81 @@
 package test.emplmanager.dao;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.*;
+import test.emplmanager.model.ConfigRead;
 import test.emplmanager.model.Emp;
 
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.*;
 import java.sql.*;
 
 public class Dao {
+    private ArrayList<String> positions;
+    private ArrayList<String> departments;
+    private static final String DRIVER = ConfigRead.getLst().get(0);
+    private static final String URL = ConfigRead.getLst().get(1);
+    private static final String USER = ConfigRead.getLst().get(2);
+    private static final String PASSWORD = ConfigRead.getLst().get(3);
 
     public static Connection getConnection(){
+
         Connection con=null;
         try{
-            Class.forName("com.mysql.jdbc.Driver");
-            con=DriverManager.getConnection("jdbc:mysql://localhost:3306/testbase","root","root");
+            Class.forName(DRIVER);
+            con=DriverManager.getConnection(URL,USER,PASSWORD);
         }catch(Exception e){System.out.println(e);}
         return con;
     }
+
+    public ArrayList<String> getPositions(){
+        try{
+            Connection con= Dao.getConnection();
+            Statement stm  = con.createStatement();
+            String sql = "Select Pos_name From positions";
+            ResultSet rst = stm.executeQuery(sql);
+            ArrayList<String> positions = new ArrayList<>();
+            while(rst.next()){
+                String name = rst.getString("Pos_name");
+                positions.add(name);
+            }
+            return positions;
+        }catch(Exception ex){ex.printStackTrace();}
+        return null;
+    }
+    public ArrayList<String> getDepartments(){
+        try{
+            Connection con= Dao.getConnection();
+            Statement stm  = con.createStatement();
+            String sql = "Select Dep_name From DEPARTMENTs";
+            ResultSet rst = stm.executeQuery(sql);
+            ArrayList<String> positions = new ArrayList<>();
+            while(rst.next()){
+                String name = rst.getString("Dep_name");
+                positions.add(name);
+            }
+            return positions;
+        }catch(Exception ex){ex.printStackTrace();}
+        return null;
+    }
+
+
     public static int save(Emp e){
         int status=0;
         try{
             Connection con= Dao.getConnection();
-            PreparedStatement check1=con.prepareStatement(
-                    "select count(department_id) as total from employee where position_id=3 and department_id=1");
-            PreparedStatement check2=con.prepareStatement(
-                    "select count(department_id) as total from employee where position_id=3 and department_id=2");
-            ResultSet rs1=check1.executeQuery();
-            ResultSet rs2=check2.executeQuery();
-            if (rs1.getInt("total") == 1 && rs2.getInt("total") == 1){con.close();}
-            PreparedStatement ps=con.prepareStatement(
-                    "insert into employee(Emp_name,department_id,position_id) values (?,?,?)");
-            ps.setString(1,e.getEmp_name());
-            ps.setInt(2,e.getDepartment_id());
-            ps.setInt(3,e.getPosition_id());
+                PreparedStatement ps=con.prepareStatement(
+                        "insert into employee(Emp_name,department_id,position_id) values (?,?,?)");
+                ps.setString(1,e.getEmp_name());
+                ps.setInt(2,e.getDepartment_id());
+                ps.setInt(3,e.getPosition_id());
 
-            status=ps.executeUpdate();
+                status=ps.executeUpdate();
 
-            con.close();
+                con.close();
+
         }catch(Exception ex){ex.printStackTrace();}
 
         return status;
@@ -43,16 +84,9 @@ public class Dao {
         int status=0;
         try{
             Connection con= Dao.getConnection();
-            PreparedStatement check1=con.prepareStatement(
-                    "select count(department_id) as total from employee where position_id=3 and department_id=1");
-            PreparedStatement check2=con.prepareStatement(
-                    "select count(department_id) as total from employee where position_id=3 and department_id=2");
-            ResultSet rs1=check1.executeQuery();
-            ResultSet rs2=check2.executeQuery();
-            if (rs1.getInt("total") == 1 && rs2.getInt("total") == 1){con.close();}
             PreparedStatement ps=con.prepareStatement(
                     "update employee set  Emp_name=?,department_id=?,position_id=? where Emp_id=?");
-            ps.setString(1,e.getEmp_name());
+              ps.setString(1,e.getEmp_name());
             ps.setInt(2,e.getDepartment_id());
             ps.setInt(3,e.getPosition_id());
             ps.setInt(4,e.getEmp_id());
@@ -87,7 +121,7 @@ public class Dao {
         try{
             Connection con= Dao.getConnection();
             PreparedStatement ps=con.prepareStatement(
-                    "update position set  Pos_name=?,wage=? where Pos_id=?");
+                    "update position1 set  Pos_name=?,wage=? where Pos_id=?");
             ps.setString(1,e.getPos_name());
             ps.setInt(2,e.getWage());
             ps.setInt(3,e.getPos_id());
@@ -104,7 +138,7 @@ public class Dao {
 
         try{
             Connection con= Dao.getConnection();
-            PreparedStatement ps=con.prepareStatement("SELECT * from position where Pos_id=?");
+            PreparedStatement ps=con.prepareStatement("SELECT * from position1 where Pos_id=?");
             ps.setInt(1,Pos_id);
             ResultSet rs=ps.executeQuery();
             if(rs.next()){
@@ -138,11 +172,11 @@ public class Dao {
     }
     public static List<Emp> getAllPositionsForEdit(){
 
-        List<Emp> list=new ArrayList<Emp>();
+        List<Emp> list=new ArrayList<>();
 
         try{
             Connection con= Dao.getConnection();
-            PreparedStatement ps=con.prepareStatement("select * from position");
+            PreparedStatement ps=con.prepareStatement("select * from position1");
             ResultSet rs=ps.executeQuery();
             while(rs.next()){
                 Emp e=new Emp();
@@ -210,12 +244,12 @@ public class Dao {
         return e;
     }
     public static List<Emp> getAllEmployees(){
-        List<Emp> list=new ArrayList<Emp>();
+        List<Emp> list=new ArrayList<>();
 
         try{
             Connection con= Dao.getConnection();
             PreparedStatement ps=con.prepareStatement("SELECT Emp_id, Emp_name, Dep_name, email, phone, Pos_name, wage FROM employee left JOIN" +
-                    " department on department_id = Dep_id left join position on position_id = Pos_id");
+                    " department on department_id = Dep_id left join position1 on position_id = Pos_id");
             ResultSet rs=ps.executeQuery();
             while(rs.next()){
                 Emp e=new Emp();

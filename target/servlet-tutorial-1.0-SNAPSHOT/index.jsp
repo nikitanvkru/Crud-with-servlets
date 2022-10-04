@@ -12,20 +12,22 @@
 <h1>Add New Employee</h1>
 <form action="SaveServlet" method="post">
     <table>
+
         <tr><td>Name:</td><td><input type="text" name="Emp_name"/></td></tr>
         <tr><td>Department:</td><td>
+            <jsp:useBean id="obj" class="test.emplmanager.dao.Dao" scope="page"/>
             <select name="department_id" style="width:150px">
-                <option>1-Bugaltery</option>
-                <option>2-Financial</option>
+                <c:forEach var="var" items="${obj.departments}">
+                    <option value="${var}">${var}</option>
+                </c:forEach>
             </select>
         </td></tr>
         <tr><td>Position:</td><td>
+            <jsp:useBean id="objc" class="test.emplmanager.dao.Dao" scope="page"/>
             <select name="position_id" style="width:150px">
-                <option>1-Admin</option>
-                <option>2-Engeneer</option>
-                <option>3-Boss</option>
-                <option>4-Intern</option>
-                <option>5-Cleaner</option>
+                <c:forEach var="var" items="${objc.positions}">
+                    <option value="${var}">${var}</option>
+                </c:forEach>
             </select>
         </td></tr>
         <tr><td colspan="2"><input type="submit" value="Save Employee"/></td></tr>

@@ -5,6 +5,7 @@ import test.emplmanager.model.Emp;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.LinkedHashMap;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -25,18 +26,26 @@ public class SaveServlet extends HttpServlet {
 
 
         Emp e=new Emp();
+        Dao dao = new Dao();
+        LinkedHashMap<String, Integer> lhmPos = new LinkedHashMap<>();
+        for (int i = 0; i < dao.getPositions().size(); i++) {
+            lhmPos.put(dao.getPositions().get(i), i+1);
+        }
+        LinkedHashMap<String, Integer> lhmDep = new LinkedHashMap<>();
+        for (int i = 0; i < dao.getDepartments().size(); i++) {
+            lhmDep.put(dao.getDepartments().get(i), i+1);
+        }
         e.setEmp_name(Emp_name);
-        e.setDepartment_id(Integer.parseInt(department_id.substring(0,1)));
-        e.setPosition_id(Integer.parseInt(position_id.substring(0,1)));
-
+        e.setDepartment_id(lhmDep.get(department_id));
+        e.setPosition_id(lhmPos.get(position_id));
         int status=Dao.save(e);
         if(status>0){
             out.println("<a href='/Testfor1_war_exploded/'>Add New Employee</a>");
             out.println("<p>Record saved successfully!</p>");
             request.getRequestDispatcher("index.html").include(request, response);
-        }else{
+        }
+        else{
             out.println("Sorry! unable to save record");
-
         }
 
         out.close();

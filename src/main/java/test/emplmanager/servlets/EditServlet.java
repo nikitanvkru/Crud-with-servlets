@@ -36,9 +36,8 @@ public class EditServlet extends HttpServlet {
         out.print("<select name='position_id' style='width:150px'>");
         out.print("<option>1-Admin</option>");
         out.print("<option>2-Engeneer</option>");
-        out.print("<option>3-Boss</option>");
-        out.print("<option>4-Intern</option>");
-        out.print("<option>5-Cleaner</option>");
+        out.print("<option>3-Intern</option>");
+        out.print("<option>4-Cleaner</option>");
         out.print("</select>");
         out.print("</td></tr>");
         out.print("<tr><td colspan='2'><input type='submit' value='Edit &amp; Save '/></td></tr>");

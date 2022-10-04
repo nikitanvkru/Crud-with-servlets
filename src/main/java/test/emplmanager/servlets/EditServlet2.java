@@ -5,6 +5,7 @@ import test.emplmanager.model.Emp;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.LinkedHashMap;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -28,11 +29,11 @@ public class EditServlet2 extends HttpServlet {
         e.setEmp_name(name);
         e.setDepartment_id(Integer.parseInt(department_id.substring(0,1)));
         e.setPosition_id(Integer.parseInt(position_id.substring(0,1)));
-
-        int status=Dao.update(e);
-        if(status>0){
+        int status = Dao.update(e);
+        if (status > 0) {
             response.sendRedirect("ViewServlet");
-        }else{
+        }
+        else{
             out.println("Sorry! unable to update record");
         }
 

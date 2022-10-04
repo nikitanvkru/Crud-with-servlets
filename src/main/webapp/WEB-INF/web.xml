@@ -82,13 +82,13 @@
 
   <!--Update user-->
   <servlet-mapping>
-    <servlet-name>EditServlet</servlet-name>
+    <servlet-name>EditServlet2</servlet-name>
     <url-pattern>/update</url-pattern>
   </servlet-mapping>
 
   <servlet>
-    <servlet-name>EditServlet</servlet-name>
-    <servlet-class>test.emplmanager.servlets.EditServlet</servlet-class>
+    <servlet-name>EditServlet2</servlet-name>
+    <servlet-class>test.emplmanager.servlets.EditServlet2</servlet-class>
   </servlet>
 
   <!--Update user-->
